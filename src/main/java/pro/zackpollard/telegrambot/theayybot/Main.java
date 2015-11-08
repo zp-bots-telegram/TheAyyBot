@@ -114,7 +114,7 @@ public class Main implements Listener {
 
                 additionalOs += "o";
             }
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(new ReplyKeyboardHide()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).build());
 
         } else if (lowercaseContent.contains("lmao")) {
 
@@ -132,7 +132,7 @@ public class Main implements Listener {
 
                 additionalYs += "y";
             }
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(new ReplyKeyboardHide()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).build());
 
         } else if (event.getContent().getContent().length() >= 8) {
             String textLanguage = Translation.detectLanguage(event.getContent().getContent());
