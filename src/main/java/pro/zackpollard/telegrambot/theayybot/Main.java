@@ -86,31 +86,26 @@ public class Main implements Listener {
 
         String lowercaseContent = event.getContent().getContent().toLowerCase();
         if (event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
-
             if (lowercaseContent.contains("nuke") || lowercaseContent.contains("bomb")) {
-
                 telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Reported to NSA.").replyTo(event.getMessage()).build());
             }
         }
 
         if (lowercaseContent.endsWith(" is love") && !lowercaseContent.equals(" is love")) {
-
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message(event.getContent().getContent().substring(0, event.getContent().getContent().length() - 7) + "is life").build());
+
         } else if (lowercaseContent.contains(" rip") || lowercaseContent.contains("rip ") || event.getContent().getContent().equalsIgnoreCase("rip") || lowercaseContent.startsWith("rip")) {
-
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("in pieces").build());
+
         } else if (lowercaseContent.contains("ayy") && lowercaseContent.contains("lmao") || lowercaseContent.contains("alien")) {
-
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy lmao").build());
-        } else if (lowercaseContent.contains("ayy")) {
 
+        } else if (lowercaseContent.contains("ayy")) {
             String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("ayy") + 3).trim();
 
             if (trimmedString.contains(" ")) {
-
                 trimmedString = trimmedString.substring(0, trimmedString.indexOf(" "));
             }
-
             int trailingYs = trailingCharactersCount(trimmedString, 'y');
 
             String additionalOs = "";
@@ -119,8 +114,8 @@ public class Main implements Listener {
 
                 additionalOs += "o";
             }
-
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(new ReplyKeyboardHide()).build());
+
         } else if (lowercaseContent.contains("lmao")) {
 
             String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
@@ -129,7 +124,6 @@ public class Main implements Listener {
 
                 trimmedString = trimmedString.substring(0, trimmedString.indexOf(" "));
             }
-
             int trailingOs = trailingCharactersCount(trimmedString, 'o');
 
             String additionalYs = "";
@@ -138,38 +132,27 @@ public class Main implements Listener {
 
                 additionalYs += "y";
             }
-
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(new ReplyKeyboardHide()).build());
-        } else {
 
-            if (event.getContent().getContent().length() >= 8) {
+        } else if (event.getContent().getContent().length() >= 8) {
+            String textLanguage = Translation.detectLanguage(event.getContent().getContent());
+            if (textLanguage != null && !textLanguage.equals("en")) {
+                String translatedText = Translation.translateText(event.getContent().getContent(), "en");
 
-                String textLanguage = Translation.detectLanguage(event.getContent().getContent());
-                if (textLanguage != null && !textLanguage.equals("en")) {
-
-                    String translatedText = Translation.translateText(event.getContent().getContent(), "en");
-
-                    if (translatedText != null && !event.getContent().getContent().equals(translatedText)) {
-
-                        Locale locale = Locale.forLanguageTag(textLanguage);
-                        event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText, telegramBot);
-                    }
+                if (translatedText != null && !event.getContent().getContent().equals(translatedText)) {
+                    Locale locale = Locale.forLanguageTag(textLanguage);
+                    event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText, telegramBot);
                 }
             }
         }
     }
 
     private int trailingCharactersCount(String string, char trail) {
-
         int count = 0;
-
         for (char character : string.toCharArray()) {
-
             if (character == trail) {
-
                 ++count;
             } else {
-
                 return count;
             }
         }
@@ -179,12 +162,10 @@ public class Main implements Listener {
 
     @Override
     public void onStickerMessageReceived(StickerMessageReceivedEvent event) {
-
         if (event.getContent().getContent().getFileId().equals("BQADBAADTQADzJm8AsWHAqcGmP2hAg")) {
-
             telegramBot.sendMessage(event.getMessage().getChat(), SendableStickerMessage.builder().sticker(new InputFile("BQADBAADVAADzJm8AlQq_rm3coV0Ag")).build());
-        } else if (event.getContent().getContent().getFileId().equals("BQADBAADVAADzJm8AlQq_rm3coV0Ag")) {
 
+        } else if (event.getContent().getContent().getFileId().equals("BQADBAADVAADzJm8AlQq_rm3coV0Ag")) {
             telegramBot.sendMessage(event.getMessage().getChat(), SendableStickerMessage.builder().sticker(new InputFile("BQADBAADTQADzJm8AsWHAqcGmP2hAg")).build());
         }
     }
