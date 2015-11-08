@@ -27,9 +27,9 @@ public class Main implements Listener {
     private final String GOOGLE_API_KEY;
     public static String YANDEX_API_KEY;
 
-	public Main(String[] args) {
+    public Main(String[] args) {
 
-        if(args.length >= 2) {
+        if (args.length >= 2) {
 
             this.telegramBot = TelegramBot.login(args[0]);
             this.GOOGLE_API_KEY = args[1];
@@ -52,27 +52,27 @@ public class Main implements Listener {
         this.GOOGLE_API_KEY = null;
 
         System.exit(-1);
-	}
+    }
 
-	@Override
-	public void onCommandMessageReceived(CommandMessageReceivedEvent event) {
+    @Override
+    public void onCommandMessageReceived(CommandMessageReceivedEvent event) {
 
-		if(event.getCommand().equalsIgnoreCase("choice")) {
+        if (event.getCommand().equalsIgnoreCase("choice")) {
 
-			String[] args = event.getArgsString().split(",");
+            String[] args = event.getArgsString().split(",");
 
-			if(args.length >= 2) {
-				telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("I say " + args[new Random().nextInt(args.length)].trim()).build());
-			} else {
+            if (args.length >= 2) {
+                telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("I say " + args[new Random().nextInt(args.length)].trim()).build());
+            } else {
 
-				telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Please send two or more arguments seperated by commas.").build());
-			}
-		} else if(event.getCommand().equalsIgnoreCase("ayyorlmao")) {
+                telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Please send two or more arguments seperated by commas.").build());
+            }
+        } else if (event.getCommand().equalsIgnoreCase("ayyorlmao")) {
 
-			telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("Ayy or Lmao, that is the question...").replyTo(event.getMessage()).replyMarkup(ReplyKeyboardMarkup.builder().selective(true).oneTime(true).addRow("Ayy", "Lmao").resize(true).build()).build());
-		} else if(event.getCommand().equalsIgnoreCase("geturl")) {
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("Ayy or Lmao, that is the question...").replyTo(event.getMessage()).replyMarkup(ReplyKeyboardMarkup.builder().selective(true).oneTime(true).addRow("Ayy", "Lmao").resize(true).build()).build());
+        } else if (event.getCommand().equalsIgnoreCase("geturl")) {
 
-            if(event.getArgs().length != 0) {
+            if (event.getArgs().length != 0) {
 
                 try {
                     event.getChat().sendMessage(SendableDocumentMessage.builder().document(new InputFile(new URL(event.getArgsString()))).build(), telegramBot);
@@ -84,7 +84,7 @@ public class Main implements Listener {
                 event.getChat().sendMessage("No URL Specified.", telegramBot);
             }
         }
-	}
+    }
 
     @Override
     public void onVoiceMessageReceived(VoiceMessageReceivedEvent event) {
@@ -107,68 +107,68 @@ public class Main implements Listener {
     @Override
     public void onTextMessageReceived(TextMessageReceivedEvent event) {
 
-		String lowercaseContent = event.getContent().getContent().toLowerCase();
+        String lowercaseContent = event.getContent().getContent().toLowerCase();
 
         System.out.println(lowercaseContent);
 
-		if(event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
+        if (event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
 
-			if(lowercaseContent.contains("nuke") || lowercaseContent.contains("bomb")) {
+            if (lowercaseContent.contains("nuke") || lowercaseContent.contains("bomb")) {
 
-				telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Reported to NSA.").replyTo(event.getMessage()).build());
-			}
-		}
+                telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Reported to NSA.").replyTo(event.getMessage()).build());
+            }
+        }
 
-        if(lowercaseContent.endsWith(" is love") && !lowercaseContent.equals(" is love")) {
+        if (lowercaseContent.endsWith(" is love") && !lowercaseContent.equals(" is love")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message(event.getContent().getContent().substring(0, event.getContent().getContent().length() - 7) + "is life").build());
-        }else if(lowercaseContent.contains(" rip") || lowercaseContent.contains("rip ") || event.getContent().getContent().equalsIgnoreCase("rip") || lowercaseContent.startsWith("rip")) {
+        } else if (lowercaseContent.contains(" rip") || lowercaseContent.contains("rip ") || event.getContent().getContent().equalsIgnoreCase("rip") || lowercaseContent.startsWith("rip")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("in pieces").build());
-        } else if(lowercaseContent.contains("ayy") && lowercaseContent.contains("lmao") || lowercaseContent.contains("alien")) {
+        } else if (lowercaseContent.contains("ayy") && lowercaseContent.contains("lmao") || lowercaseContent.contains("alien")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy lmao").build());
-        } else if(lowercaseContent.contains("ayy")) {
+        } else if (lowercaseContent.contains("ayy")) {
 
-			String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("ayy") + 3).trim();
+            String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("ayy") + 3).trim();
 
-			if(trimmedString.contains(" ")) {
+            if (trimmedString.contains(" ")) {
 
-				trimmedString = trimmedString.substring(0, trimmedString.indexOf(" "));
-			}
+                trimmedString = trimmedString.substring(0, trimmedString.indexOf(" "));
+            }
 
-			int trailingYs = trailingCharactersCount(trimmedString, 'y');
+            int trailingYs = trailingCharactersCount(trimmedString, 'y');
 
-			String additionalOs = "";
+            String additionalOs = "";
 
-			for(int i = 0; i < trailingYs; ++i) {
+            for (int i = 0; i < trailingYs; ++i) {
 
-				additionalOs += "o";
-			}
+                additionalOs += "o";
+            }
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(new ReplyKeyboardHide()).build());
-		} else if (lowercaseContent.contains("lmao")) {
+        } else if (lowercaseContent.contains("lmao")) {
 
-			String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
+            String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
 
-			if(trimmedString.contains(" ")) {
+            if (trimmedString.contains(" ")) {
 
-				trimmedString = trimmedString.substring(0, trimmedString.indexOf(" "));
-			}
+                trimmedString = trimmedString.substring(0, trimmedString.indexOf(" "));
+            }
 
-			int trailingOs = trailingCharactersCount(trimmedString, 'o');
+            int trailingOs = trailingCharactersCount(trimmedString, 'o');
 
-			String additionalYs = "";
+            String additionalYs = "";
 
-			for(int i = 0; i < trailingOs; ++i) {
+            for (int i = 0; i < trailingOs; ++i) {
 
-				additionalYs += "y";
-			}
+                additionalYs += "y";
+            }
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(new ReplyKeyboardHide()).build());
         } else {
 
-            if(event.getContent().getContent().length() >= 8) {
+            if (event.getContent().getContent().length() >= 8) {
 
                 String textLanguage = Translation.detectLanguage(event.getContent().getContent());
                 if (textLanguage != null && !textLanguage.equals("en")) {
@@ -185,31 +185,31 @@ public class Main implements Listener {
         }
     }
 
-	private int trailingCharactersCount(String string, char trail) {
+    private int trailingCharactersCount(String string, char trail) {
 
-		int count = 0;
+        int count = 0;
 
-		for(char character : string.toCharArray()) {
+        for (char character : string.toCharArray()) {
 
-			if(character == trail) {
+            if (character == trail) {
 
-				++count;
-			} else {
+                ++count;
+            } else {
 
-				return count;
-			}
-		}
+                return count;
+            }
+        }
 
-		return count;
-	}
+        return count;
+    }
 
     @Override
     public void onStickerMessageReceived(StickerMessageReceivedEvent event) {
 
-		if (event.getContent().getContent().getFileId().equals("BQADBAADTQADzJm8AsWHAqcGmP2hAg")) {
+        if (event.getContent().getContent().getFileId().equals("BQADBAADTQADzJm8AsWHAqcGmP2hAg")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableStickerMessage.builder().sticker(new InputFile("BQADBAADVAADzJm8AlQq_rm3coV0Ag")).build());
-        } else if(event.getContent().getContent().getFileId().equals("BQADBAADVAADzJm8AlQq_rm3coV0Ag")) {
+        } else if (event.getContent().getContent().getFileId().equals("BQADBAADVAADzJm8AlQq_rm3coV0Ag")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableStickerMessage.builder().sticker(new InputFile("BQADBAADTQADzJm8AsWHAqcGmP2hAg")).build());
         }
@@ -221,10 +221,10 @@ public class Main implements Listener {
         System.out.println(event.getContent().getContent().getFileId());
 
         event.getContent().getContent().downloadFile(telegramBot, new File("./" + event.getContent().getContent().getFileId()));
-	}
+    }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		new Main(args);
-	}
+        new Main(args);
+    }
 }
