@@ -85,9 +85,6 @@ public class Main implements Listener {
     public void onTextMessageReceived(TextMessageReceivedEvent event) {
 
         String lowercaseContent = event.getContent().getContent().toLowerCase();
-
-        System.out.println(lowercaseContent);
-
         if (event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
 
             if (lowercaseContent.contains("nuke") || lowercaseContent.contains("bomb")) {
