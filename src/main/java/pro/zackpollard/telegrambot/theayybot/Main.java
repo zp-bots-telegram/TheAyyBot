@@ -48,31 +48,16 @@ public class Main implements Listener {
 
     @Override
     public void onCommandMessageReceived(CommandMessageReceivedEvent event) {
-
-        if (event.getCommand().equalsIgnoreCase("choice")) {
-
-            String[] args = event.getArgsString().split(",");
-
-            if (args.length >= 2) {
-                telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("I say " + args[new Random().nextInt(args.length)].trim()).build());
-            } else {
-
-                telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Please send two or more arguments seperated by commas.").build());
-            }
-        } else if (event.getCommand().equalsIgnoreCase("ayyorlmao")) {
-
+        if (event.getCommand().equalsIgnoreCase("ayyorlmao")) {
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("Ayy or Lmao, that is the question...").replyTo(event.getMessage()).replyMarkup(ReplyKeyboardMarkup.builder().selective(true).oneTime(true).addRow("Ayy", "Lmao").resize(true).build()).build());
         } else if (event.getCommand().equalsIgnoreCase("geturl")) {
-
             if (event.getArgs().length != 0) {
-
                 try {
                     event.getChat().sendMessage(SendableDocumentMessage.builder().document(new InputFile(new URL(event.getArgsString()))).build(), telegramBot);
                 } catch (MalformedURLException e) {
                     event.getChat().sendMessage("URL was malformed, correct the URL and try again.", telegramBot);
                 }
             } else {
-
                 event.getChat().sendMessage("No URL Specified.", telegramBot);
             }
         }
