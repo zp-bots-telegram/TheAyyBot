@@ -28,30 +28,22 @@ public class Main implements Listener {
     public static String YANDEX_API_KEY;
 
     public Main(String[] args) {
+        this.telegramBot = TelegramBot.login(args[0]);
+        this.GOOGLE_API_KEY = args[1];
+        YANDEX_API_KEY = args[2];
 
-        if (args.length >= 2) {
+        telegramBot.getEventsManager().register(this);
 
-            this.telegramBot = TelegramBot.login(args[0]);
-            this.GOOGLE_API_KEY = args[1];
-            YANDEX_API_KEY = args[2];
+        telegramBot.startUpdates(false);
 
-            telegramBot.getEventsManager().register(this);
-
-            telegramBot.startUpdates(false);
-
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
-        telegramBot = null;
-        this.GOOGLE_API_KEY = null;
-
-        System.exit(-1);
     }
 
     @Override
@@ -216,7 +208,10 @@ public class Main implements Listener {
     }
 
     public static void main(String[] args) {
-
-        new Main(args);
+        if (args.length >= 2) {
+            new Main(args);
+        } else {
+            System.exit(-1);
+        }
     }
 }
