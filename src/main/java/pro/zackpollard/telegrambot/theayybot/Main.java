@@ -215,14 +215,6 @@ public class Main implements Listener {
         }
     }
 
-    @Override
-    public void onDocumentMessageReceived(DocumentMessageReceivedEvent event) {
-
-        System.out.println(event.getContent().getContent().getFileId());
-
-        event.getContent().getContent().downloadFile(telegramBot, new File("./" + event.getContent().getContent().getFileId()));
-    }
-
     public static void main(String[] args) {
 
         new Main(args);
