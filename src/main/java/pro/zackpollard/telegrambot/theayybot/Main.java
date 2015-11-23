@@ -165,7 +165,12 @@ public class Main implements Listener {
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(new ReplyKeyboardHide()).build());
         } else if(lowercaseContent.contains("intense")) {
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableVideoMessage.builder().video(new InputFile("http://www.zackpollard.pro/at-file-uploads/TADAM TAM TATAM.mp4")).caption("It's getting intense up in here...").build());
+            System.out.print("intensity detected...");
+            try {
+                telegramBot.sendMessage(event.getMessage().getChat(), SendableVideoMessage.builder().video(new InputFile(new URL("http://www.zackpollard.pro/at-file-uploads/TADAM TAM TATAM.mp4"))).caption("It's getting intense up in here...").build());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         } else {
 
             if (event.getContent().getContent().length() >= 8) {
