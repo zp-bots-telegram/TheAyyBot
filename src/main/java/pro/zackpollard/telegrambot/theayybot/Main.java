@@ -2,10 +2,7 @@ package pro.zackpollard.telegrambot.theayybot;
 
 import com.darkprograms.speech.recognizer.RecognizerChunked;
 import pro.zackpollard.telegrambot.api.TelegramBot;
-import pro.zackpollard.telegrambot.api.chat.message.send.InputFile;
-import pro.zackpollard.telegrambot.api.chat.message.send.SendableDocumentMessage;
-import pro.zackpollard.telegrambot.api.chat.message.send.SendableStickerMessage;
-import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
+import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.Listener;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
@@ -166,6 +163,9 @@ public class Main implements Listener {
             }
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(new ReplyKeyboardHide()).build());
+        } else if(lowercaseContent.contains("intense")) {
+
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableVideoMessage.builder().video(new InputFile("http://www.zackpollard.pro/at-file-uploads/TADAM TAM TATAM.mp4")).caption("It's getting intense up in here...").build());
         } else {
 
             if (event.getContent().getContent().length() >= 8) {
