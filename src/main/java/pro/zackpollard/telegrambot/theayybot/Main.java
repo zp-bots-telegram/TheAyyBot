@@ -4,7 +4,10 @@ import com.darkprograms.speech.recognizer.RecognizerChunked;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.Listener;
-import pro.zackpollard.telegrambot.api.event.chat.message.*;
+import pro.zackpollard.telegrambot.api.event.chat.message.CommandMessageReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.message.StickerMessageReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.message.TextMessageReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.message.VoiceMessageReceivedEvent;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 
@@ -12,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -170,22 +172,6 @@ public class Main implements Listener {
                 telegramBot.sendMessage(event.getMessage().getChat(), SendableVideoMessage.builder().video(new InputFile(new URL("http://www.zackpollard.pro/at-file-uploads/TADAM TAM TATAM.mp4"))).caption("It's getting intense up in here...").build());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-            }
-        } else {
-
-            if (event.getContent().getContent().length() >= 8) {
-
-                String textLanguage = Translation.detectLanguage(event.getContent().getContent());
-                if (textLanguage != null && !textLanguage.equals("en")) {
-
-                    String translatedText = Translation.translateText(event.getContent().getContent(), "en");
-
-                    if (translatedText != null && !event.getContent().getContent().equals(translatedText)) {
-
-                        Locale locale = Locale.forLanguageTag(textLanguage);
-                        event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText, telegramBot);
-                    }
-                }
             }
         }
     }
