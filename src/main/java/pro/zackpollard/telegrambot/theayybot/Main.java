@@ -80,6 +80,20 @@ public class Main implements Listener {
 
                 event.getChat().sendMessage("No URL Specified.", telegramBot);
             }
+        } else if (event.getCommand().equalsIgnoreCase("translate") {
+
+                String textLanguage = Translation.detectLanguage(event.getArgsString());
+                if (textLanguage != null && !textLanguage.equals("en")) {
+
+                    String translatedText = Translation.translateText(event.getArgsString(), "en");
+
+                    if (translatedText != null && !event.getArgsString().equals(translatedText)) {
+
+                        Locale locale = Locale.forLanguageTag(textLanguage);
+                        event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText, telegramBot);
+                    }
+                }
+            }
         }
     }
 
@@ -171,23 +185,7 @@ public class Main implements Listener {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-        } else {
-
-            if (event.getContent().getContent().length() >= 8) {
-
-                String textLanguage = Translation.detectLanguage(event.getContent().getContent());
-                if (textLanguage != null && !textLanguage.equals("en")) {
-
-                    String translatedText = Translation.translateText(event.getContent().getContent(), "en");
-
-                    if (translatedText != null && !event.getContent().getContent().equals(translatedText)) {
-
-                        Locale locale = Locale.forLanguageTag(textLanguage);
-                        event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText, telegramBot);
-                    }
-                }
-            }
-        }
+        } 
     }
 
     private int trailingCharactersCount(String string, char trail) {
