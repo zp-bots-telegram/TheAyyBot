@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.theayybot;
 import com.darkprograms.speech.recognizer.GSpeechResponseListener;
 import com.darkprograms.speech.recognizer.GoogleResponse;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 
 /**
@@ -11,16 +12,17 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 public class ResponseListener implements GSpeechResponseListener {
 
     private final TelegramBot telegramBot;
-    private final String chatID;
+    private final Chat chat;
 
-    public ResponseListener(TelegramBot telegramBot, String chatID) {
+    public ResponseListener(TelegramBot telegramBot, Chat chat) {
 
         this.telegramBot = telegramBot;
-        this.chatID = chatID;
+        this.chat = chat;
     }
 
     public void onResponse(GoogleResponse googleResponse) {
 
-        telegramBot.sendMessage(TelegramBot.getChat(chatID), SendableTextMessage.builder().message("Speech -> Text Conversion: " + googleResponse.getResponse()).build());
+        telegramBot.sendMessage(TelegramBot.getChat(chat.getId()), SendableTextMessage.builder().message("Speech -> Text Conversion: " + googleResponse.getResponse()).build());
+        System.out.println("(" + chat.getId() + " - " + chat.getName() + ")" + " - Voice Message - " + googleResponse.getResponse());
     }
 }

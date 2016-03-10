@@ -107,7 +107,7 @@ public class Main implements Listener {
             pr.waitFor();
 
             RecognizerChunked recognizer = new RecognizerChunked(GOOGLE_API_KEY);
-            recognizer.addResponseListener(new ResponseListener(telegramBot, event.getChat().getId()));
+            recognizer.addResponseListener(new ResponseListener(telegramBot, event.getChat()));
             recognizer.getRecognizedDataForFlac(new File("current.flac"), 48000);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -119,7 +119,7 @@ public class Main implements Listener {
 
         String lowercaseContent = event.getContent().getContent().toLowerCase();
 
-        System.out.println(lowercaseContent);
+        System.out.println("(" + event.getChat().getId() + " - " + event.getChat().getName() + ")" + " - (" + event.getMessage().getSender().getFullName() + " - " + event.getMessage().getSender().getUsername() + ") --- " + lowercaseContent);
 
         if (event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
 
