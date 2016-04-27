@@ -67,7 +67,7 @@ public class Main implements Listener {
         } else if (event.getCommand().equalsIgnoreCase("ayyorlmao")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("Ayy or Lmao, that is the question...").replyTo(event.getMessage()).replyMarkup(ReplyKeyboardMarkup.builder().selective(true).oneTime(true).addRow("Ayy", "Lmao").resize(true).build()).build());
-        } else if (event.getCommand().equalsIgnoreCase("geturl")) {
+        }/** else if (event.getCommand().equalsIgnoreCase("geturl")) {
 
             if (event.getArgs().length != 0) {
 
@@ -79,7 +79,7 @@ public class Main implements Listener {
             } else {
 
                 event.getChat().sendMessage("No URL Specified.", telegramBot);
-            }
+            }**/
         } else if (event.getCommand().equalsIgnoreCase("translate")) {
 
             String textLanguage = Translation.detectLanguage(event.getArgsString());
