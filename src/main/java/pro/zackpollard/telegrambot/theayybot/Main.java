@@ -94,7 +94,7 @@ public class Main implements Listener {
                     event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText);
                 }
             }
-        } else if(event.getCommand().toLowerCase().contains("/r/")) {
+        } else if(event.getCommand().toLowerCase().startsWith("r/")) {
 
             String lowerCaseCommand = event.getCommand().toLowerCase();
 
