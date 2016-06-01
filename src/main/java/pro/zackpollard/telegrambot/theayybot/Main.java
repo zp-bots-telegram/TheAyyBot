@@ -106,7 +106,7 @@ public class Main implements Listener {
             }
             String redditURL = beginning.substring(0, end);
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com/" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby /" + redditURL + "](http://reddit.com/" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
         }
     }
 
