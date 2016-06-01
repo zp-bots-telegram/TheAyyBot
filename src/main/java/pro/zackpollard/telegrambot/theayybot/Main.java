@@ -143,7 +143,7 @@ public class Main implements Listener {
             }
         }
 
-        if(lowercaseContent.contains("/r/")) {
+        if(lowercaseContent.contains(" /r/")) {
 
             int location = lowercaseContent.indexOf("/r/");
             String beginning = lowercaseContent.substring(location);
