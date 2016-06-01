@@ -22,7 +22,7 @@ public class ResponseListener implements GSpeechResponseListener {
 
     public void onResponse(GoogleResponse googleResponse) {
 
-        telegramBot.sendMessage(TelegramBot.getChat(chat.getId()), SendableTextMessage.builder().message("Speech -> Text Conversion: " + googleResponse.getResponse()).build());
+        telegramBot.sendMessage(chat, SendableTextMessage.builder().message("Speech -> Text Conversion: " + googleResponse.getResponse()).build());
         System.out.println("(" + chat.getId() + " - " + chat.getName() + ")" + " - Voice Message - " + googleResponse.getResponse());
     }
 }

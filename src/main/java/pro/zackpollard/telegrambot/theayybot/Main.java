@@ -5,6 +5,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.Listener;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
+import pro.zackpollard.telegrambot.api.keyboards.KeyboardButton;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 
@@ -66,7 +67,7 @@ public class Main implements Listener {
             }
         } else if (event.getCommand().equalsIgnoreCase("ayyorlmao")) {
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("Ayy or Lmao, that is the question...").replyTo(event.getMessage()).replyMarkup(ReplyKeyboardMarkup.builder().selective(true).oneTime(true).addRow("Ayy", "Lmao").resize(true).build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("Ayy or Lmao, that is the question...").replyTo(event.getMessage()).replyMarkup(ReplyKeyboardMarkup.builder().selective(true).oneTime(true).addRow(KeyboardButton.builder().text("Ayy").build(), KeyboardButton.builder().text("Lmao").build()).resize(true).build()).build());
         /**} else if (event.getCommand().equalsIgnoreCase("geturl")) {
 
             if (event.getArgs().length != 0) {
@@ -90,7 +91,7 @@ public class Main implements Listener {
                 if (translatedText != null && !event.getArgsString().equals(translatedText)) {
 
                     Locale locale = Locale.forLanguageTag(textLanguage);
-                    event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText, telegramBot);
+                    event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText);
                 }
             }
         }
@@ -156,7 +157,7 @@ public class Main implements Listener {
                 additionalOs += "o";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(new ReplyKeyboardHide()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
         } else if (lowercaseContent.contains("lmao")) {
 
             String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
@@ -175,7 +176,7 @@ public class Main implements Listener {
                 additionalYs += "y";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(new ReplyKeyboardHide()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
         } else if(lowercaseContent.contains("intense")) {
 
             System.out.print("intensity detected...");
@@ -184,6 +185,14 @@ public class Main implements Listener {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+        } else if(lowercaseContent.contains("/r/")) {
+
+            int location = lowercaseContent.indexOf("/r/");
+            String beginning = lowercaseContent.substring(location);
+            int end = beginning.indexOf(' ');
+            String redditURL = lowercaseContent.substring(0, end);
+
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com/" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
         }
     }
 
