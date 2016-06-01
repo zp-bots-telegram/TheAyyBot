@@ -98,7 +98,7 @@ public class Main implements Listener {
 
             String lowerCaseCommand = event.getCommand().toLowerCase();
 
-            int location = lowerCaseCommand.indexOf("/r/");
+            int location = lowerCaseCommand.indexOf("r/");
             String beginning = lowerCaseCommand.substring(location);
             int end = beginning.indexOf(' ') + 1;
             if(end <= 2) {
