@@ -189,9 +189,9 @@ public class Main implements Listener {
 
             int location = lowercaseContent.indexOf("/r/");
             String beginning = lowercaseContent.substring(location);
-            int end = beginning.indexOf(' ');
+            int end = beginning.indexOf(' ') + 1;
             if(end <= 2) {
-                end = beginning.length() - 1;
+                end = beginning.length();
             }
             String redditURL = beginning.substring(0, end);
 
