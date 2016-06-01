@@ -94,6 +94,19 @@ public class Main implements Listener {
                     event.getChat().sendMessage("Translation from " + locale.getDisplayName() + ": " + translatedText);
                 }
             }
+        } else if(event.getCommand().toLowerCase().contains("/r/")) {
+
+            String lowerCaseCommand = event.getCommand().toLowerCase();
+
+            int location = lowerCaseCommand.indexOf("/r/");
+            String beginning = lowerCaseCommand.substring(location);
+            int end = beginning.indexOf(' ') + 1;
+            if(end <= 2) {
+                end = beginning.length();
+            }
+            String redditURL = beginning.substring(0, end);
+
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
         }
     }
 
@@ -130,9 +143,23 @@ public class Main implements Listener {
             }
         }
 
-        if (lowercaseContent.endsWith(" is love") && !lowercaseContent.equals(" is love")) {
+        if(lowercaseContent.contains("/r/")) {
+
+            int location = lowercaseContent.indexOf("/r/");
+            String beginning = lowercaseContent.substring(location);
+            int end = beginning.indexOf(' ') + 1;
+            if(end <= 2) {
+                end = beginning.length();
+            }
+            String redditURL = beginning.substring(0, end);
+
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
+        } else if (lowercaseContent.endsWith(" is love") && !lowercaseContent.equals(" is love")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message(event.getContent().getContent().substring(0, event.getContent().getContent().length() - 7) + "is life").build());
+        } else if (lowercaseContent.endsWith(" are love") && !lowercaseContent.equals(" are love")) {
+
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message(event.getContent().getContent().substring(0, event.getContent().getContent().length() - 7) + "are life").build());
         } else if (lowercaseContent.contains(" rip") || lowercaseContent.contains("rip ") || event.getContent().getContent().equalsIgnoreCase("rip") || lowercaseContent.startsWith("rip")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("in pieces").build());
@@ -185,17 +212,6 @@ public class Main implements Listener {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-        } else if(lowercaseContent.contains("/r/")) {
-
-            int location = lowercaseContent.indexOf("/r/");
-            String beginning = lowercaseContent.substring(location);
-            int end = beginning.indexOf(' ') + 1;
-            if(end <= 2) {
-                end = beginning.length();
-            }
-            String redditURL = beginning.substring(0, end);
-
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com/" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
         }
     }
 
