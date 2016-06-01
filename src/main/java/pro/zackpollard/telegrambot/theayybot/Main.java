@@ -190,10 +190,10 @@ public class Main implements Listener {
             int location = lowercaseContent.indexOf("/r/");
             String beginning = lowercaseContent.substring(location);
             int end = beginning.indexOf(' ');
-            if(end <=2) {
+            if(end <= 2) {
                 end = beginning.length() - 1;
             }
-            String redditURL = lowercaseContent.substring(0, end);
+            String redditURL = beginning.substring(0, end);
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com/" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
         }
