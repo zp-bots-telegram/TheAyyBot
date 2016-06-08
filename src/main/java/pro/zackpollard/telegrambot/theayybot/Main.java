@@ -100,7 +100,7 @@ public class Main implements Listener {
 
             int location = lowerCaseCommand.indexOf("r/");
             String beginning = lowerCaseCommand.substring(location);
-            int end = beginning.indexOf(' ') + 1;
+            int end = beginning.indexOf(' ');
             if(end <= 2) {
                 end = beginning.length();
             }
@@ -147,10 +147,11 @@ public class Main implements Listener {
 
             int location = lowercaseContent.indexOf("/r/");
             String beginning = lowercaseContent.substring(location);
-            int end = beginning.indexOf(' ') + 1;
+            int end = beginning.indexOf(' ');
             if(end <= 2) {
                 end = beginning.length();
             }
+
             String redditURL = beginning.substring(0, end);
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("[For u bby " + redditURL + "](http://reddit.com" + redditURL + ")").parseMode(ParseMode.MARKDOWN).build());
