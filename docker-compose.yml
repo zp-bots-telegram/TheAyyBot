@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  bot:
+    image: theayybot
+    container_name: bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: run
+    secrets:
+      - telegram_auth_token
+      - google_api_key
+      - yandex_api_key
+
+secrets:
+  telegram_auth_token:
+    file: secrets/telegram_auth_token.txt
+  google_api_key:
+    file: secrets/google_api_key.txt
+  yandex_api_key:
+    file: secrets/yandex_api_key.txt
