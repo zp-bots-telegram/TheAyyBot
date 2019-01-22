@@ -6,52 +6,80 @@ import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.Listener;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
 import pro.zackpollard.telegrambot.api.keyboards.KeyboardButton;
-import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
+import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardRemove;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Zack Pollard
  */
-public class Main implements Listener {
+public class Main implements Listener, Runnable {
 
     private final TelegramBot telegramBot;
     private final String GOOGLE_API_KEY;
-    public static String YANDEX_API_KEY;
-    private static final Pattern ripRegex = Pattern.compile("\\br+(?<i>i+)(?<p>p+)(?:erino)?\\b");  // Pattern.CASE_INSENSITIVE unneccessary because we're matching against lowercaseContent
+    static String YANDEX_API_KEY;
+    private static final Pattern ripRegex = Pattern.compile("\\br+(?<i>i+)(?<p>p+)(?:erino)?\\b");  // Pattern.CASE_INSENSITIVE unnecessary because we're matching against lowercaseContent
 
     public Main(String[] args) {
+        String authToken;
 
         if (args.length >= 2) {
-
-            this.telegramBot = TelegramBot.login(args[0]);
-            this.GOOGLE_API_KEY = args[1];
+            authToken = args[0];
+            GOOGLE_API_KEY = args[1];
             YANDEX_API_KEY = args[2];
-
-            telegramBot.getEventsManager().register(this);
-
-            telegramBot.startUpdates(false);
-
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        } else {
+            authToken = readDockerSecret("telegram_auth_token");
+            GOOGLE_API_KEY = readDockerSecret("google_api_key");
+            YANDEX_API_KEY = readDockerSecret("yandex_api_key");
         }
 
-        telegramBot = null;
-        this.GOOGLE_API_KEY = null;
+        telegramBot = authToken == null ? null : TelegramBot.login(authToken);
+    }
 
-        System.exit(-1);
+    public void run() {
+        if (telegramBot == null || GOOGLE_API_KEY == null || YANDEX_API_KEY == null) {
+            System.err.println("Missing at least one secret; aborting");
+            return;
+        }
+
+        telegramBot.getEventsManager().register(this);
+        telegramBot.startUpdates(false);
+
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+    }
+
+    private static String readDockerSecret(String id) {
+        Path path = Path.of("/run/secrets", id);
+        String value = null;
+
+        if (Files.exists(path)) {
+            try {
+                value = Files.readString(path);
+            } catch (IOException ex) {
+                System.err.printf("Unable to read Docker secret %s from %s: %s%n", id, path, ex.getMessage());
+            }
+        } else {
+            System.err.printf("Docker secret %s doesn't exist at %s.", id, path);
+        }
+
+        return value == null || value.isBlank() ? null : value.trim();
     }
 
     @Override
@@ -190,7 +218,7 @@ public class Main implements Listener {
                 additionalOs += "o";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(ReplyKeyboardRemove.builder().build()).build());
         } else if (lowercaseContent.contains("lmao")) {
 
             String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
@@ -209,7 +237,7 @@ public class Main implements Listener {
                 additionalYs += "y";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(ReplyKeyboardRemove.builder().build()).build());
         } else if(lowercaseContent.contains("intense")) {
 
             System.out.print("intensity detected...");
@@ -252,7 +280,6 @@ public class Main implements Listener {
     }
 
     public static void main(String[] args) {
-
-        new Main(args);
+        new Main(args).run();
     }
 }
