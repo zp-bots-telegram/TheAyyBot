@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.xml.ws.http.HTTPException;
 
 import com.darkprograms.speech.util.StringUtil;
 
@@ -172,7 +171,7 @@ public class RecognizerChunked {
 					out.close();
 					resCode = httpConn.getResponseCode();
 					if(resCode >= HttpURLConnection.HTTP_UNAUTHORIZED){//Stops here if Google doesn't like us/
-						throw new HTTPException(HttpURLConnection.HTTP_UNAUTHORIZED);//Throws
+						throw new RuntimeException("Status: " + HttpURLConnection.HTTP_UNAUTHORIZED);//Throws
 					}
 					String line;//Each line that is read back from Google.
 					BufferedReader br =	new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
