@@ -6,7 +6,6 @@ import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.Listener;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
 import pro.zackpollard.telegrambot.api.keyboards.KeyboardButton;
-import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 
 import java.io.File;
@@ -191,7 +190,7 @@ public class Main implements Listener {
                 additionalOs += "o";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).build());
         } else if (lowercaseContent.contains("lmao")) {
 
             String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
@@ -210,7 +209,7 @@ public class Main implements Listener {
                 additionalYs += "y";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).build());
         } else if(lowercaseContent.contains("intense")) {
 
             System.out.print("intensity detected...");
