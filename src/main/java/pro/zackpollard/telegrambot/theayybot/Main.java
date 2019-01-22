@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * @author Zack Pollard
@@ -24,6 +25,7 @@ public class Main implements Listener {
     private final TelegramBot telegramBot;
     private final String GOOGLE_API_KEY;
     public static String YANDEX_API_KEY;
+    private static final Pattern ripRegex = Pattern.compile("\\br+(?<i>i+)(?<p>p+)(?:erino)?\\b");  // Pattern.CASE_INSENSITIVE unneccessary because we're matching against lowercaseContent
 
     public Main(String[] args) {
 
@@ -134,6 +136,8 @@ public class Main implements Listener {
         String lowercaseContent = event.getContent().getContent().toLowerCase();
 
         System.out.println("(" + event.getChat().getId() + " - " + event.getChat().getName() + ")" + " - (" + event.getMessage().getSender().getFullName() + " - " + event.getMessage().getSender().getUsername() + ") --- " + lowercaseContent);
+        
+        Matcher ripMatcher = ripRegex.matcher(lowercaseContent);
 
         if (event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
 
@@ -161,9 +165,10 @@ public class Main implements Listener {
         } else if (lowercaseContent.endsWith(" are love") && !lowercaseContent.equals(" are love")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message(event.getContent().getContent().substring(0, event.getContent().getContent().length() - 7) + "are life").build());
-        } else if (lowercaseContent.contains(" rip") || lowercaseContent.contains("rip ") || event.getContent().getContent().equalsIgnoreCase("rip") || lowercaseContent.startsWith("rip")) {
+        } else if (ripMatcher.matches()) {
+            String response = String.format("%sn %sieces", ripMatcher.group("i"), ripMatcher.group("p"));
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("in pieces").build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message(response).build());
         } else if (lowercaseContent.contains("ayy") && lowercaseContent.contains("lmao") || lowercaseContent.contains("alien")) {
 
             telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy lmao").build());
