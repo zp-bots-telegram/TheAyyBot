@@ -1,9 +1,9 @@
-FROM maven:11-jdk-slim AS base
+FROM openjdk:11-jre-stretch AS base
 
-FROM openjdk:11-jre-stretch AS build
+FROM maven:3-jdk-11-slim AS build
 WORKDIR /build
 COPY . .
-RUN mvn clean compile jar
+RUN mvn clean compile package
 
 FROM base AS run
 WORKDIR /java
