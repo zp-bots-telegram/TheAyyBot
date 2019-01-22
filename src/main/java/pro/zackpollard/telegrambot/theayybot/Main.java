@@ -25,7 +25,7 @@ public class Main implements Listener {
     private final TelegramBot telegramBot;
     private final String GOOGLE_API_KEY;
     public static String YANDEX_API_KEY;
-    private static final Pattern ripRegex = Pattern.compile("\\br+(?<i>i+)(?<p>p+)(?:erino)?\\b");  // Pattern.CASE_INSENSITIVE unneccessary because we're matching against lowercaseContent
+    private static final Pattern ripRegex = Pattern.compile("\\br+(?<i>i+)(?<p>p+)(?:erino)?\\b");  // Pattern.CASE_INSENSITIVE unnecessary because we're matching against lowercaseContent
 
     public Main(String[] args) {
 
