@@ -139,14 +139,6 @@ public class Main implements Listener {
         
         Matcher ripMatcher = ripRegex.matcher(lowercaseContent);
 
-        if (event.getMessage().getSender().getId() == 55395012 || event.getMessage().getSender().getId() == 91845503) {
-
-            if (lowercaseContent.contains("nuke") || lowercaseContent.contains("bomb")) {
-
-                telegramBot.sendMessage(event.getChat(), SendableTextMessage.builder().message("Reported to NSA.").replyTo(event.getMessage()).build());
-            }
-        }
-
         if(lowercaseContent.contains(" /r/")) {
 
             int location = lowercaseContent.indexOf("/r/");
