@@ -31,7 +31,7 @@ public class Main implements Listener {
 
     public Main(String[] args) {
 
-        if (args.length >= 2) {
+        if (System.getenv().containsKey("BOT_API_KEY") && System.getenv().containsKey("GOOGLE_API_KEY") && System.getenv().containsKey("YANDEX_API_KEY")) {
 
             this.telegramBot = TelegramBot.login(System.getenv("BOT_API_KEY"));
             this.GOOGLE_API_KEY = System.getenv("GOOGLE_API_KEY");
@@ -48,10 +48,13 @@ public class Main implements Listener {
                     e.printStackTrace();
                 }
             }
+        } else {
+            System.out.println("BOT_API_KEY, GOOGLE_API_KEY and YANDEX_API_KEY are all required environment variables");
         }
 
         telegramBot = null;
         this.GOOGLE_API_KEY = null;
+        YANDEX_API_KEY = null;
 
         System.exit(-1);
     }
