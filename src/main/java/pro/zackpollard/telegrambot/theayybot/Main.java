@@ -8,6 +8,7 @@ import pro.zackpollard.telegrambot.api.event.chat.message.*;
 import pro.zackpollard.telegrambot.api.keyboards.KeyboardButton;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
+import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardRemove;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -31,9 +33,9 @@ public class Main implements Listener {
 
         if (args.length >= 2) {
 
-            this.telegramBot = TelegramBot.login(args[0]);
-            this.GOOGLE_API_KEY = args[1];
-            YANDEX_API_KEY = args[2];
+            this.telegramBot = TelegramBot.login(System.getenv("BOT_API_KEY"));
+            this.GOOGLE_API_KEY = System.getenv("GOOGLE_API_KEY");
+            YANDEX_API_KEY = System.getenv("YANDEX_API_KEY");
 
             telegramBot.getEventsManager().register(this);
 
@@ -182,7 +184,7 @@ public class Main implements Listener {
                 additionalOs += "o";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("lmao" + additionalOs).replyMarkup(ReplyKeyboardRemove.builder().build()).build());
         } else if (lowercaseContent.contains("lmao")) {
 
             String trimmedString = lowercaseContent.substring(lowercaseContent.indexOf("lmao") + 4).trim();
@@ -201,7 +203,7 @@ public class Main implements Listener {
                 additionalYs += "y";
             }
 
-            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(ReplyKeyboardHide.builder().build()).build());
+            telegramBot.sendMessage(event.getMessage().getChat(), SendableTextMessage.builder().message("ayy" + additionalYs).replyMarkup(ReplyKeyboardRemove.builder().build()).build());
         } else if(lowercaseContent.contains("intense")) {
 
             System.out.print("intensity detected...");
